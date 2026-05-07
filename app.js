@@ -145,13 +145,23 @@ class VASTParser {
 
   _parseMediaFiles(linear) {
     return Array.from(linear.querySelectorAll('MediaFile')).map(mf => ({
-      url: (mf.textContent || '').trim(),
+      url: this._extractCdata(mf),
       type: mf.getAttribute('type') || '',
       delivery: mf.getAttribute('delivery') || 'progressive',
       width: parseInt(mf.getAttribute('width') || '0', 10),
       height: parseInt(mf.getAttribute('height') || '0', 10),
       bitrate: parseInt(mf.getAttribute('bitrate') || '0', 10),
     }));
+  }
+
+  _extractCdata(el) {
+    for (const node of el.childNodes) {
+      if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.CDATA_SECTION_NODE) {
+        const v = node.nodeValue.trim();
+        if (v) return v;
+      }
+    }
+    return (el.textContent || '').trim();
   }
 
   _parseTracking(linear) {
@@ -462,6 +472,11 @@ class AdPlayer {
       return;
     }
 
+    if (!mf.url || !/^https?:\/\//i.test(mf.url)) {
+      this._placeholder.textContent = `Media URL invalid or empty: "${mf.url}"`;
+      return;
+    }
+
     const isAudio = mf.type && mf.type.startsWith('audio/');
     this._mediaEl = isAudio ? this._audio : this._video;
 
@@ -757,10 +772,12 @@ class VastTester {
       return;
     }
 
-    // update URL bar for shareability
-    const params = new URLSearchParams(location.search);
-    params.set('tag', input);
-    history.replaceState(null, '', '?' + params.toString());
+    // update URL bar for shareability (silent no-op on file:// where replaceState is blocked)
+    try {
+      const params = new URLSearchParams(location.search);
+      params.set('tag', input);
+      history.replaceState(null, '', '?' + params.toString());
+    } catch (_) {}
 
     this._destroyPlayer();
     this._logger.clear();
