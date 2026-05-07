@@ -27,18 +27,22 @@
 
     <section id="input-panel">
       <div class="panel-label">VAST Input</div>
-      <div id="url-row">
-        <input type="text" id="vast-url" placeholder="https://example.com/vast.xml  or paste raw XML" autocomplete="off" spellcheck="false">
-        <button id="load-btn">Load</button>
-      </div>
-      <div id="input-status"></div>
-      <details id="xml-details">
-        <summary>Fetched XML <span id="xml-hop-label"></span></summary>
-        <div id="xml-toolbar">
-          <button id="copy-xml-btn" class="small-btn">Copy</button>
+      <div id="input-body">
+        <div id="url-row">
+          <input type="text" id="vast-url" placeholder="https://example.com/vast.xml  or paste raw XML" autocomplete="off" spellcheck="false">
+          <button id="load-btn">Load</button>
         </div>
-        <textarea id="raw-xml" readonly placeholder="XML response appears here after fetch"></textarea>
-      </details>
+        <div id="input-status"></div>
+        <div id="xml-details">
+          <div id="xml-toolbar">
+            Fetched XML <span id="xml-hop-label"></span>
+            <button id="copy-xml-btn" class="small-btn">Copy</button>
+          </div>
+          <div id="xml-container">
+            <pre id="raw-xml"></pre>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="log-panel">

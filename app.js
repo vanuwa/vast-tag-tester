@@ -746,7 +746,7 @@ class VastTester {
     this._urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') this._onLoad(); });
     this._clearLogBtn.addEventListener('click', () => this._logger.clear());
     this._copyXmlBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(this._rawXml.value).catch(() => {});
+      navigator.clipboard.writeText(this._rawXml.textContent).catch(() => {});
     });
   }
 
@@ -760,7 +760,7 @@ class VastTester {
     // fallback: sessionStorage for the fetched XML (read-only display)
     const cached = sessionStorage.getItem('vastRawXml');
     if (cached) {
-      this._rawXml.value = cached;
+      this._rawXml.textContent = cached;
     }
   }
 
@@ -786,7 +786,7 @@ class VastTester {
     this._destroyPlayer();
     this._logger.clear();
     this._diagram.clear();
-    this._rawXml.value = '';
+    this._rawXml.textContent = '';
     this._xmlHopLabel.textContent = '';
     this._setStatus('', 'loading');
 
@@ -803,7 +803,7 @@ class VastTester {
 
       // populate raw XML panel
       const combinedXml = vastData.rawXmlChain.join('\n\n<!-- ═══ WRAPPER HOP ═══ -->\n\n');
-      this._rawXml.value = combinedXml;
+      this._rawXml.textContent = combinedXml;
       sessionStorage.setItem('vastRawXml', combinedXml);
 
       if (vastData.rawXmlChain.length > 1) {

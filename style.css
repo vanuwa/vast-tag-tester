@@ -50,9 +50,13 @@ header h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 48px - 16px);
+  margin: 8px;
   gap: 1px;
   background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
 
 section {
@@ -65,12 +69,13 @@ section {
 
 /* ── Panel label ── */
 .panel-label {
+  height: 36px;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--text-mid);
-  padding: 8px 14px 7px;
+  padding: 0 14px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
   display: flex;
@@ -150,7 +155,18 @@ section {
 }
 
 /* ── Input panel ── */
-#input-panel { padding: 14px; gap: 10px; }
+#input-panel { }
+
+#input-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
 
 #url-row {
   display: flex;
@@ -230,28 +246,13 @@ button:disabled { opacity: 0.4; cursor: default; }
 
 #xml-details {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   border: 1px solid var(--border-md);
   border-radius: 6px;
-  min-height: 0;
+  overflow: hidden;
 }
-
-#xml-details summary {
-  padding: 6px 12px;
-  cursor: pointer;
-  font-size: 11px;
-  color: var(--text-mid);
-  user-select: none;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #fafafa;
-  border-radius: 6px 6px 0 0;
-}
-#xml-details summary:hover { color: var(--accent); background: var(--accent-bg); }
-#xml-details[open] summary { border-radius: 6px 6px 0 0; }
 
 #xml-hop-label {
   font-size: 10px;
@@ -260,23 +261,30 @@ button:disabled { opacity: 0.4; cursor: default; }
 
 #xml-toolbar {
   display: flex;
-  padding: 4px 8px;
-  border-bottom: 1px solid var(--border);
+  align-items: center;
+  padding: 5px 10px 5px 12px;
+  font-size: 11px;
+  color: var(--text-mid);
   background: #fafafa;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+#xml-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--bg-page);
 }
 
 #raw-xml {
-  flex: 1;
-  background: var(--bg-page);
-  color: var(--text-mid);
-  border: none;
   padding: 10px;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   font-size: 11px;
-  resize: none;
-  outline: none;
-  overflow-y: auto;
-  min-height: 80px;
+  color: var(--text-mid);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
 }
 
 /* ── Log panel ── */
