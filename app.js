@@ -486,6 +486,8 @@ class AdPlayer {
     } else {
       this._video.style.display = 'block';
       this._placeholder.style.display = 'none';
+      // Overlay captures clicks on video content but must not cover native controls (bottom ~44px)
+      this._overlay.style.bottom = '44px';
       this._overlay.style.pointerEvents = 'auto';
     }
 
@@ -502,6 +504,7 @@ class AdPlayer {
 
     this._attachListeners();
     this._logger.log('media-ready', mf.url);
+    this._mediaEl.play().catch(() => {});
   }
 
   _loadBanner(nl) {
@@ -696,6 +699,7 @@ class AdPlayer {
     this._banner.style.display = 'none';
     this._banner.innerHTML = '';
     this._overlay.style.pointerEvents = 'none';
+    this._overlay.style.bottom = '0';
     this._skipBtn.hidden = true;
     this._meta.textContent = '';
     this._placeholder.style.display = '';
