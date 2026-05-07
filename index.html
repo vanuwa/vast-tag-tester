@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAST Tag Tester</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>VAST Tag Tester</h1>
+  </header>
+
+  <main id="grid">
+    <section id="player-panel">
+      <div class="panel-label">Player</div>
+      <div id="player-container">
+        <video id="ad-video" controls playsinline></video>
+        <audio id="ad-audio" controls></audio>
+        <div id="banner-container"></div>
+        <div id="player-overlay"></div>
+        <div id="player-placeholder">Load a VAST tag to begin</div>
+        <button id="skip-btn" hidden>Skip Ad</button>
+      </div>
+      <div id="media-meta"></div>
+    </section>
+
+    <section id="input-panel">
+      <div class="panel-label">VAST Input</div>
+      <div id="url-row">
+        <input type="text" id="vast-url" placeholder="https://example.com/vast.xml  or paste raw XML" autocomplete="off" spellcheck="false">
+        <button id="load-btn">Load</button>
+      </div>
+      <div id="input-status"></div>
+      <details id="xml-details">
+        <summary>Fetched XML <span id="xml-hop-label"></span></summary>
+        <div id="xml-toolbar">
+          <button id="copy-xml-btn" class="small-btn">Copy</button>
+        </div>
+        <textarea id="raw-xml" readonly placeholder="XML response appears here after fetch"></textarea>
+      </details>
+    </section>
+
+    <section id="log-panel">
+      <div class="panel-label">
+        Event Log
+        <button id="clear-log-btn" class="small-btn">Clear</button>
+      </div>
+      <ol id="event-log"></ol>
+    </section>
+
+    <section id="diagram-panel">
+      <div class="panel-label">VAST Structure</div>
+      <div id="diagram-container">
+        <pre id="diagram-tree"></pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
