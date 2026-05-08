@@ -712,6 +712,8 @@ class AdPlayer {
 // ─────────────────────────────────────────────
 // VastTester (main controller)
 // ─────────────────────────────────────────────
+const ORIENT_RATIOS = { landscape: 16 / 9, square: 1, portrait: 9 / 16 };
+
 class VastTester {
   constructor() {
     this._urlInput    = document.getElementById('vast-url');
@@ -737,6 +739,14 @@ class VastTester {
     this._diagram = new DiagramRenderer(this._diagramPre);
     this._player  = null;
 
+    this._playerStage     = document.getElementById('player-stage');
+    this._playerContainer = document.getElementById('player-container');
+    this._orientBtns      = document.querySelectorAll('.orient-btn');
+    this._orientation     = 'landscape';
+
+    this._resizeObserver = new ResizeObserver(() => this._resizePlayer());
+    this._resizeObserver.observe(this._playerStage);
+
     this._bindEvents();
     this._restoreFromUrl();
   }
@@ -748,6 +758,30 @@ class VastTester {
     this._copyXmlBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(this._rawXml.textContent).catch(() => {});
     });
+    this._orientBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.dataset.ratio !== this._orientation) this._setOrientation(btn.dataset.ratio);
+      });
+    });
+  }
+
+  _setOrientation(ratio) {
+    this._orientation = ratio;
+    this._orientBtns.forEach(b => b.classList.toggle('active', b.dataset.ratio === ratio));
+    this._resizePlayer();
+  }
+
+  _resizePlayer() {
+    const style = getComputedStyle(this._playerStage);
+    const sw = this._playerStage.clientWidth  - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    const sh = this._playerStage.clientHeight - parseFloat(style.paddingTop)  - parseFloat(style.paddingBottom);
+    if (!sw || !sh) return;
+    const ratio = ORIENT_RATIOS[this._orientation];
+    let w, h;
+    if (sw / sh > ratio) { h = sh; w = Math.round(sh * ratio); }
+    else                  { w = sw; h = Math.round(sw / ratio); }
+    this._playerContainer.style.width  = w + 'px';
+    this._playerContainer.style.height = h + 'px';
   }
 
   _restoreFromUrl() {
