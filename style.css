@@ -129,17 +129,58 @@ section {
 }
 
 /* ── Player panel ── */
+#player-stage {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  background: var(--bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 12px;
+}
+
 #player-container {
   position: relative;
-  flex: 1;
+  flex-shrink: 0;
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  /* width/height set by JS ResizeObserver */
 }
 
+#orientation-switcher {
+  margin-left: auto;
+  display: flex;
+  border: 1px solid var(--border-md);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.orient-btn {
+  background: transparent;
+  color: var(--text-dim);
+  border: none;
+  border-radius: 0;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.orient-btn + .orient-btn { border-left: 1px solid var(--border-md); }
+.orient-btn:hover         { background: var(--accent-bg); color: var(--accent); }
+.orient-btn.active        { background: var(--accent); color: #fff; }
+.orient-btn.active:hover  { background: #4096ff; }
+
 #ad-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;

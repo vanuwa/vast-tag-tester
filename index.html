@@ -18,14 +18,23 @@
 
   <main id="grid">
     <section id="player-panel">
-      <div class="panel-label">Player</div>
-      <div id="player-container">
-        <video id="ad-video" controls playsinline></video>
-        <audio id="ad-audio" controls></audio>
-        <div id="banner-container"></div>
-        <div id="player-overlay"></div>
-        <div id="player-placeholder">Load a VAST tag to begin</div>
-        <button id="skip-btn" hidden>Skip Ad</button>
+      <div class="panel-label">
+        Player
+        <div id="orientation-switcher">
+          <button class="orient-btn active" data-ratio="landscape">16:9</button>
+          <button class="orient-btn" data-ratio="square">1:1</button>
+          <button class="orient-btn" data-ratio="portrait">9:16</button>
+        </div>
+      </div>
+      <div id="player-stage">
+        <div id="player-container">
+          <video id="ad-video" controls playsinline></video>
+          <audio id="ad-audio" controls></audio>
+          <div id="banner-container"></div>
+          <div id="player-overlay"></div>
+          <div id="player-placeholder">Load a VAST tag to begin</div>
+          <button id="skip-btn" hidden>Skip Ad</button>
+        </div>
       </div>
       <div id="media-meta"></div>
     </section>
